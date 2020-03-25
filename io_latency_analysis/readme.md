@@ -1,6 +1,7 @@
 
 a tool to analysis latency
 
+support python3 & python2.7
 
 eg0:
 python analysis_time.py nfs_io.log 2 3
