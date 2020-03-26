@@ -86,6 +86,10 @@ class entry_object():
                  self.total_num,
                  self.total_time))
 
+        if self.total_num <= 0:
+            print("\n")
+            return
+        
         percent = 0.0
         sum_percent = 0.0
         total_num = float(self.total_num)
