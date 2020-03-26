@@ -52,16 +52,15 @@ class entry_object():
         #min_latency_init = sys.maxint   #最小延迟初始化,python2
         min_latency_init = sys.maxsize,  #最小延迟,python3
         mode = "Unknown"):
-        self.name = name
-        self.min_latency  = min_latency_init
-        self.mode = mode;
-    
-    def set_min_latency(self, min_latency):
-        self.min_latency  = min_latency
+        self.name = name #分析项名称
+        self.min_latency  = min_latency_init #初始化最小延迟
+        self.mode = mode; #模式信息
     
     def print_self(self):
         if self.total_num > 0:
             self.avg_latency = self.total_time / self.total_num
+            if 1 == self.total_num :
+                self.min_latency = self.max_latency
         else :
             self.min_latency = 0 #没有该项
         
@@ -89,7 +88,7 @@ class entry_object():
         if self.total_num <= 0:
             print("\n")
             return
-        
+
         percent = 0.0
         sum_percent = 0.0
         total_num = float(self.total_num)
@@ -393,7 +392,6 @@ if __name__ == "__main__":
         target_name = sys.argv[5]
         entry = analysis_file_target_entry(sys.argv[1], int(sys.argv[2]) - 1, int(sys.argv[3]) - 1, mode, target_name)
         entry.print_self()
-        
     else :
         #自动分析所有项目
         entry_dict = analysis_file(sys.argv[1], int(sys.argv[2]) - 1, int(sys.argv[3]) - 1, mode)
