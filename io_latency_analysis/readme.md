@@ -4,16 +4,12 @@ a tool to analysis latency，support python3 & python2.7
 可以快速的帮助开发者分析函数的总耗时，平均耗时，执行次数等。能获取到函数耗时的分布情况，百分比。
 
 
-
 please input file path & entry position &time position
 Note: support python3 & python2.7 
    : <python command>  <filepath>   <entry_position> <time_position> [mode] [target_name]
-eg0:
-python analysis_time.py nfs_io.log 2 3
-eg1:
-python analysis_time.py nfs_io.log 2 3 us
-eg2:
-python analysis_time.py nfs_io.log 2 3 us nfsd_dispatch
+eg1: <python command>  nfsd_io.log        2             3                                
+eg2: <python command>  nfsd_io.log        2             3             us                 
+eg3: <python command>  nfsd_io.log        2             3             us    nfsd_dispatch
 
 out输出示范：
  *************    vfs_writev:(us)    ************* 
