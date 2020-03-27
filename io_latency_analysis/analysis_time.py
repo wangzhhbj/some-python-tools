@@ -249,56 +249,61 @@ def analysis_relist(re_list, ob_entry, entry_position, time_position):
     elif (time < ob_entry.min_latency) :
         ob_entry.min_latency = time
     
-    if time <= 2 :
-        ob_entry.latency2 += 1;
-    elif time <= 4 :
-        ob_entry.latency4 += 1;
-    elif time <= 6 :
-        ob_entry.latency6 += 1;
-    elif time <= 8 :
-        ob_entry.latency8 += 1;
-    elif time <= 10 :
-        ob_entry.latency10 += 1;
-    elif time <= 20 :
-        ob_entry.latency20 += 1;
-    elif time <= 40 :
-        ob_entry.latency40 += 1;
-    elif time <= 60 :
-        ob_entry.latency60 += 1;
-    elif time <= 80 :
-        ob_entry.latency80 += 1;
+    if time <= 10 :
+        if time <= 2 :
+            ob_entry.latency2 += 1;
+        elif time <= 4 :
+            ob_entry.latency4 += 1;
+        elif time <= 6 :
+            ob_entry.latency6 += 1;
+        elif time <= 8 :
+            ob_entry.latency8 += 1;
+        else:
+            ob_entry.latency10 += 1;
     elif time <= 100 :
-        ob_entry.latency100 += 1;
-    elif time <= 200 :
-        ob_entry.latency200 += 1;
-    elif time <= 400 :
-        ob_entry.latency400 += 1;
-    elif time <= 600 :
-        ob_entry.latency600 += 1;
-    elif time <= 800 :
-        ob_entry.latency800 += 1;
+        if time <= 20 :
+            ob_entry.latency20 += 1;
+        elif time <= 40 :
+            ob_entry.latency40 += 1;
+        elif time <= 60 :
+            ob_entry.latency60 += 1;
+        elif time <= 80 :
+            ob_entry.latency80 += 1;
+        else:
+            ob_entry.latency100 += 1;
     elif time <= 1000 :
-        ob_entry.latency1000 += 1;
-    elif time <= 2000 :
-        ob_entry.latency2000 += 1;
-    elif time <= 4000 :
-        ob_entry.latency4000 += 1;
-    elif time <= 6000 :
-        ob_entry.latency6000 += 1;
-    elif time <= 8000 :
-        ob_entry.latency8000 += 1;
+        if time <= 200 :
+            ob_entry.latency200 += 1;
+        elif time <= 400 :
+            ob_entry.latency400 += 1;
+        elif time <= 600 :
+            ob_entry.latency600 += 1;
+        elif time <= 800 :
+            ob_entry.latency800 += 1;
+        else :
+            ob_entry.latency1000 += 1;
     elif time <= 10000 :
-        ob_entry.latency10000 += 1;
-    elif time <= 20000 :
-        ob_entry.latency20000 += 1;
-    elif time <= 40000 :
-        ob_entry.latency40000 += 1;
-    elif time <= 60000 :
-        ob_entry.latency60000 += 1;
-    elif time <= 80000 :
-        ob_entry.latency80000 += 1;
+        if time <= 2000 :
+            ob_entry.latency2000 += 1;
+        elif time <= 4000 :
+            ob_entry.latency4000 += 1;
+        elif time <= 6000 :
+            ob_entry.latency6000 += 1;
+        elif time <= 8000 :
+            ob_entry.latency8000 += 1;
+        else :
+            ob_entry.latency10000 += 1;
     elif time <= 100000 :
-        ob_entry.latency100000 += 1;
+        if time <= 20000 :
+            ob_entry.latency20000 += 1;
+        elif time <= 40000 :
+            ob_entry.latency40000 += 1;
+        elif time <= 60000 :
+            ob_entry.latency60000 += 1;
+        elif time <= 80000 :
+            ob_entry.latency80000 += 1;
+        else :
+            ob_entry.latency100000 += 1;
     else:
         ob_entry.latency_out_range += 1;
     
