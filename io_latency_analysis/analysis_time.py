@@ -57,8 +57,9 @@ class entry_object():
         self.mode = mode; #模式信息
     
     def print_self(self):
+        total_num = float(self.total_num) #python2除法无法计算小数，需要转换一下
         if self.total_num > 0:
-            self.avg_latency = self.total_time / self.total_num
+            self.avg_latency = self.total_time / total_num
             if 1 == self.total_num :
                 self.min_latency = self.max_latency
         else :
@@ -91,7 +92,6 @@ class entry_object():
 
         percent = 0.0
         sum_percent = 0.0
-        total_num = float(self.total_num)
         print(  "|distribution        number        percent(%)       sum_percent(%)\n"
                 "|---------------------------------------------------------------"
              )
