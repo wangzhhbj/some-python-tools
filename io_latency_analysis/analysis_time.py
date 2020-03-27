@@ -19,7 +19,8 @@ class entry_object():
     
     total_time = 0   #总耗时
     
-    latency2 = 0  # 0 - 2
+    latency0 = 0  # 0
+    latency2 = 0  # 1 - 2
     latency4 = 0  # 2 - 4
     latency6 = 0  # 4 - 6
     latency8 = 0  # 6 - 8
@@ -95,10 +96,15 @@ class entry_object():
         print(  "|distribution        number        percent(%)       sum_percent(%)\n"
                 "|---------------------------------------------------------------"
              )
+        if self.latency0 :
+            percent = self.latency0 * 100 / total_num
+            sum_percent += percent
+            print(  "|0               :   %d             %.2f               %.2f    " %
+                 (self.latency0, percent, sum_percent))
         if self.latency2 :
             percent = self.latency2 * 100 / total_num
             sum_percent += percent
-            print(  "|0-2             :   %d             %.2f               %.2f    " %
+            print(  "|1-2             :   %d             %.2f               %.2f    " %
                  (self.latency2, percent, sum_percent))
         if self.latency4 :
             percent = self.latency4 * 100 / total_num
@@ -251,7 +257,10 @@ def analysis_relist(re_list, ob_entry, entry_position, time_position):
     
     if time <= 10 :
         if time <= 2 :
-            ob_entry.latency2 += 1;
+            if 0 == time :
+                ob_entry.latency0 += 1
+            else :
+                ob_entry.latency2 += 1;
         elif time <= 4 :
             ob_entry.latency4 += 1;
         elif time <= 6 :
