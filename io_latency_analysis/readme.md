@@ -6,10 +6,11 @@ a tool to analysis latency，support python3 & python2.7
 ```
 please input file path & entry position &time position
 Note: support python3 & python2.7 
-:<python command>  <filepath>   <entry_position> <time_position> [mode] [target_name]
+:<python command>  <filepath>   <entry_position> <time_position> [mode] [target_name_list]
 eg1: <python command>  nfsd_io.log        2             3                                
 eg2: <python command>  nfsd_io.log        2             3             us                 
 eg3: <python command>  nfsd_io.log        2             3             us    nfsd_dispatch
+eg4: <python command>  nfsd_io.log        2             3             us    nfsd_dispatch,nfs_write
 ```
 
 #python analysis_time.py nfs_io.log 2 3 us
