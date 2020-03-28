@@ -318,6 +318,11 @@ def analysis_relist(re_list, ob_entry, entry_position, time_position):
     
     
 
+def print_entry_dict(entry_dict) :
+    for k in entry_dict.keys() :
+        entry_dict[k].print_self()
+
+
 
 '''
 file：要分析的文件
@@ -327,11 +332,19 @@ mode：模式信息
 '''
 def analysis_file( file, entry_position, time_position , mode):
     entry_dict = {} #创建一个字典，用来存项数
-
+    position_tmp = entry_position + 1
+    
+    if entry_position < time_position :
+        position_tmp = time_position + 1
+    
     with open(file,'r') as f:
         for line in f.readlines():
             #去除换行，同时兼容linux和windows
             re_list = re.split(',', line.replace('\n', '').replace('\r', ''))
+            
+            #判断项数是否足够
+            if len(re_list) < position_tmp :
+                continue
             
             #判断时间项是否为数字
             if not re_list[time_position].isdigit() :
@@ -352,11 +365,6 @@ def analysis_file( file, entry_position, time_position , mode):
     
     return entry_dict
 
-def print_entry_dict(entry_dict) :
-    for k in entry_dict.keys() :
-        entry_dict[k].print_self()
-
-
 '''
 file：要分析的文件
 entry_position：项的位置
@@ -364,32 +372,50 @@ time_position：耗时位置
 mode：模式信息
 target_name：目标信息
 '''
-def analysis_file_target_entry( file, entry_position, time_position , mode, target_name):
+def analysis_file_target_entry( file, entry_position, time_position , mode, target_list):
+    if 0 == len(target_list) :
+        return {}
 
-    new_entry = entry_object(name = target_name,
-                             mode = mode)
+    entry_dict = {} #创建一个字典，用来存项数
+    for entry in target_list : 
+        # 新的项
+        new_entry = entry_object(name = entry,
+                                 mode = mode)
+        entry_dict[entry] = new_entry
+
+    position_tmp = entry_position + 1
+    if entry_position < time_position :
+        position_tmp = time_position + 1
+        
     with open(file,'r') as f:
         for line in f.readlines():
             #去除换行，解决linux和windows
             re_list = re.split(',', line.replace('\n', '').replace('\r', ''))
             
-            #匹配到已有的项,且判断时间项是否为数字
-            if re_list[entry_position] == target_name and re_list[time_position].isdigit():
+            #判断项数是否足够
+            if len(re_list) < position_tmp :
+                continue
+            
+            #检查是否在字典中,且判断时间项是否为数字
+            if ((re_list[entry_position] in entry_dict) 
+                and re_list[time_position].isdigit()):
                 analysis_relist(re_list,
-                                new_entry,
+                                entry_dict[re_list[entry_position]],
                                 entry_position,
                                 time_position)
-    return new_entry
+    return entry_dict
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 4 :
-        print("please input file path & entry position &time position\n"
-              "Note: support python3 & python2.7 \n"
-              "   : <python command>  <filepath>   <entry_position> <time_position> [mode] [target_name]\n"
+        print("Version : 0.91beta \n"
+              "Note    : support python3 & python2.7 \n"
+              "please input file path & entry position &time position\n\n"
+              "   : <python command>  <filepath>   <entry_position> <time_position> [mode] [target_list]\n"
               "eg1: <python command>  nfsd_io.log        2             3                                \n"
               "eg2: <python command>  nfsd_io.log        2             3             us                 \n"
               "eg3: <python command>  nfsd_io.log        2             3             us    nfsd_dispatch\n"
+              "eg4: <python command>  nfsd_io.log        2             3             us    nfsd_create,nfsd_write\n"
              )
         exit(-1)
     
@@ -403,9 +429,9 @@ if __name__ == "__main__":
     
     if len(sys.argv) >= 6:
         #查找指定项目
-        target_name = sys.argv[5]
-        entry = analysis_file_target_entry(sys.argv[1], int(sys.argv[2]) - 1, int(sys.argv[3]) - 1, mode, target_name)
-        entry.print_self()
+        target_list = re.split(',', sys.argv[5])
+        entry_dict = analysis_file_target_entry(sys.argv[1], int(sys.argv[2]) - 1, int(sys.argv[3]) - 1, mode, target_list)
+        print_entry_dict(entry_dict)
     else :
         #自动分析所有项目
         entry_dict = analysis_file(sys.argv[1], int(sys.argv[2]) - 1, int(sys.argv[3]) - 1, mode)
