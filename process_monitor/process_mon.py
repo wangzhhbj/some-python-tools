@@ -87,7 +87,6 @@ class cls_process():
                     (time_now - self.start_time > self.time_long)) : #判断时间是否到达
                     self.stop()
                 
-                print(abs(uss - uss_last) , self.mem_accuracy, abs(cpu_percent - cpu_last) , self.cpu_accuracy)
                 if ((abs(uss - uss_last) < self.mem_accuracy) and #内存精度
                     (abs(cpu_percent - cpu_last) < self.cpu_accuracy) and #cpu精度
                     (self.__mark == '')):   #是否有标记
