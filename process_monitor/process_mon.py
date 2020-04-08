@@ -77,7 +77,7 @@ class cls_process():
             f.write("time,cpu(%),mem(%),rss(M),vms(M),uss(M),pss(M),swap(M),mark\n") # titles
             #print("time,cpu(%),mem(%),rss(M),vms(M),uss(M),pss(M),swap(M),mark\n")
             self.__mark = 'monitor start'
-            while self.__running :
+            while self.__running or (self.__mark != '') :
                 rss, vms, shared, text, lib, data, dirty, uss, pss, swap = self.__process.memory_full_info()
                 cpu_percent = self.__process.cpu_percent()
                 mem_percent = self.__process.memory_percent()
