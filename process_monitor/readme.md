@@ -1,7 +1,8 @@
 monitor process CPU & mem
 
 
-usage: process_monitor [-h] [--mem_accuracy MEM_ACCURACY] [--cpu_accuracy CPU_ACCURACY] [--pid PID] [--dir DIR]
+usage: process_monitor [-h] [--mem_accuracy MEM_ACCURACY]
+                       [--cpu_accuracy CPU_ACCURACY] [--pid PID] [--dir DIR]
                        [--time TIME] [--interval INTERVAL]
 
 monitor cpu & mem. version:0.1beta
@@ -16,4 +17,3 @@ optional arguments:
   --dir DIR             out file path.(default: "." )
   --time TIME           How long to monitor.(seconds,default: forever )
   --interval INTERVAL   time interval.(seconds, 1--300s, default: 1s )
-
